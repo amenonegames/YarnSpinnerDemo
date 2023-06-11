@@ -1,0 +1,89 @@
+﻿title: Start
+tags:
+position: -553,-420
+---
+<<declare $MomotaroHP to 20>>
+<<declare $MomotaroHumanity to 0 >>
+<<declare $DogHP to 3>>
+<<declare $MonkeyHP to 3>>
+<<declare $KijiHP to 3>>
+<<declare $Damage to 0>>
+
+<<jump Opening>>
+===
+title: Opening
+tags:
+position: -552,-306
+color:red
+---
+<<ChangeBackground BackGround onigashima>>
+<<ChangeImage Enemy Momotaro>>
+闇の力に呑まれた桃太郎が現れた
+<<Shake Enemy 0.5 30>> 
+犬:ああ！桃太郎さん、正気を取り戻してください…！
+<<jump 犬の行動>>
+===
+title: 桃太郎の攻撃
+tags:
+position: -767,-174
+color:red
+---
+桃太郎の攻撃
+<<set $Damage to dice(2)>>
+犬に{$Damage}のダメージ
+<<jump 犬の行動>>
+===
+title: 犬の行動
+tags:
+position: -551,-176
+color:red
+---
+
+犬の行動
+->噛みつく
+    犬は桃太郎に噛みついた
+    <<Shake Enemy 1 50>>  
+    <<set $MomotaroHP -= 1>>
+->きびだんごを投げる
+    犬:桃太郎さん！おばあさんのきびだんごですよ！
+    きびだんごを投げた。
+    <<Shake Enemy 1 80>>  
+    桃太郎の体力が上がった。
+    <<set $MomotaroHP += 1>>
+    桃太郎は人間性を少し取り戻した
+    <<set $MomotaroHumanity += 1 >>
+->説得する
+    犬:ももたろうさん！僕たちのことを思い出してください！
+    <<set $MomotaroHumanity += 1 >>
+<<jump StatusCheck>>
+
+===
+title: StatusCheck
+tags:
+position: -553,-25
+color:red
+---
+<<if $MomotaroHumanity > 2>>
+    <<jump MomotaroWakeup>>
+<<endif>>
+
+<<jump StatusShow>>
+===
+title: StatusShow
+tags:
+position: -553,94
+color:red
+---
+桃太郎の残HP：{$MomotaroHP} <br> 桃太郎の人間性：{$MomotaroHumanity}
+
+<<jump 桃太郎の攻撃>>
+===
+title: MomotaroWakeup
+tags:
+position: -338,-24
+color:red
+---
+
+<<ChangeBackground BackGround sougen>>
+ももたろうは正気を取り戻した
+===
